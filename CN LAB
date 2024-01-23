@@ -1,0 +1,110 @@
+5.
+import java.io.*;
+import java.util.*;
+class CR {
+  public static void main(String args[]) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter Generator:");
+        String gen = scanner.nextLine();
+        System.out.println("Enter Data:");
+        String data = scanner.nextLine();
+        String code = data;
+        while (code.length() < (data.length() + gen.length() - 1))
+            code = code + "0";
+          code = data + div(code, gen);
+        System.out.println("The transmitted Code Word is: " + code);
+        System.out.println("Please enter the received Code Word: ");
+        String rec = scanner.nextLine();
+       if (Integer.parseInt(div(rec, gen)) == 0)
+            System.out.println("The received code word contains no errors.");
+        else
+            System.out.println("The received code word contains errors.");
+        scanner.close();
+    }
+      static String div(String num1, String num2) {
+        int pointer = num2.length();
+        String result = num1.substring(0, pointer);
+        String remainder = "";
+        for (int i = 0; i < num2.length(); i++) {
+            if (result.charAt(i) == num2.charAt(i))
+                remainder += "0";
+            else
+                remainder += "1";
+        }
+           while (pointer < num1.length()) {
+            if (remainder.charAt(0) == '0') {
+                remainder = remainder.substring(1, remainder.length());
+                remainder = remainder + String.valueOf(num1.charAt(pointer));
+                pointer++;
+            }
+            result = remainder;
+            remainder = "";
+            for (int i = 0; i < num2.length(); i++) {
+                if (result.charAt(i) == num2.charAt(i))
+                    remainder += "0";
+                else
+                    remainder += "1";
+            }
+        }
+        return remainder;
+    }
+}
+
+
+8.
+import java.io.*;
+import java.util.*;
+class Leakybucket {
+    public static void main(String[] args) {
+        int no_of_queries, storage, output_pkt_size;
+        int input_pkt_size, bucket_size, size_left;
+        storage = 0;
+        no_of_queries = 4;
+        bucket_size = 10;
+        input_pkt_size = 4;
+        output_pkt_size = 1;
+        for (int i = 0; i < no_of_queries; i++) {
+            size_left = bucket_size - storage; 
+            if (input_pkt_size <= (size_left)) {
+                storage += input_pkt_size;
+            } else {
+                System.out.println("Packet loss = " + input_pkt_size);
+            }
+            System.out.println("Buffer size= " + storage + " out of bucket size= " + bucket_size);
+            storage -= output_pkt_size;
+        }
+    }
+}
+
+9.
+import java.net.*;
+import java.io.*;
+import java.util.*;
+
+public class DNS {
+    public static void main(String[] args) {
+        int n;
+        Scanner scanner = new Scanner(System.in);
+
+        do {
+            System.out.println("\n Menu: \n 1. DNS 2. Exit \n");
+            System.out.println("\n Enter your choice");
+            n = scanner.nextInt();
+
+            if (n == 1) {
+                try {
+                    System.out.println("\n Enter Host Name ");
+                    String hname = scanner.next();
+                    InetAddress address = InetAddress.getByName(hname);
+                    System.out.println("Host Name: " + address.getHostName());
+                    System.out.println("IP: " + address.getHostAddress());
+                } catch (UnknownHostException e) {
+                    System.out.println("Unknown Host");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        } while (!(n == 2));
+        scanner.close();
+    }
+}
