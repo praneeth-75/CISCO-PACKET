@@ -1,0 +1,252 @@
+
+program 1
+
+df1<-data.frame(
+  state=c("AndPrdsh","TamilNdu","UttPsh","MadhPsh","KerLa","Telga"),
+  population=c(500000,600000,300000,800000,3000000,700000),
+  murder=c(5.7,6.3,2.5,8.5,9.4,7.2),
+  abbrevation=c("ap","tn","up","mp","kl","ts"))
+
+print(df1)
+mean(df1$population)
+mean(df1$population,trim=0.1)
+median(df1$population)
+mean(df1$murder)
+median(df1$murder)
+weighted.mean(df1$murder,w=df1$population)
+
+
+Ex 2: 
+
+df1<-data.frame(stuid=c(23,24,25,26,27),
+                stuname=c("j","a","b","c","d"))
+print(df1)
+summary(df1)
+length(df1)
+dim(df1)
+class(df1)
+str(df1)
+
+#add colomn
+df1<-cbind(df1,gender=c("m","m","m","f","m"),
+           marks=c(65,25,85,45,65))
+print(df1)
+#add rows
+df1<-rbind(df1,c(11,"e","f",45))
+print(df1)
+#acces colomn
+print(df1[1])
+print(df1$stuname)
+print(df1$stuid)
+
+program 2
+
+df1<-data.frame(
+  state=c("AndPrdsh","TamilNdu","UttPsh","MadhPsh","KerLa","Telga"),
+  population=c(500000,600000,300000,800000,3000000,700000),
+  murder=c(5.7,6.3,2.5,8.5,9.4,7.2),
+  abbrevation=c("ap","tn","up","mp","kl","ts")
+)
+print(df1)
+#range
+print(max(df1$population-min(df1$population)))
+
+#variance
+print(var(df1$population))
+print(var(df1$murder))
+
+#standatd devation
+print(sd(df1$population))
+print(sd(df1$murder))
+
+#IQR
+print(IQR(df1$population))
+print(IQR(df1$murder))
+
+#MAD
+print(mad(df1$population))
+print(mad(df1$murder))
+
+program 3
+
+#boxplot
+
+boxplot(disp~gear,data=mtcars,
+        main="Displacement by gear",
+        xlab="Gear",
+        ylab="Displacement")
+
+#box plot
+a<-c(12,7,6,37,2,43,62)
+b<-c("mon","tue","wen","fri","sat","sun")
+barplot(a,names.arg=b,
+        xlab="week",
+        ylab="article",
+        col="blue",
+        main="article chart")
+
+
+#histogram
+v<-c(17,32,11,3,38,2,37,41,18,29,43)
+hist(v,
+     xlab="no.of articles",
+     col="C6F0B9",
+     border="blue",
+     xlim=c(0,50),
+     ylim=c(0,5),
+     breaks=5)
+     
+#density
+
+plot(density(mtcars$wt,bw=0.5))
+#jitter
+rug(jitter(mtcars$wt))
+ 
+
+programe  4
+x=c(7,5,8,9,6,2)
+y=c(4,5,8,6,2,3)
+result=cor(x,y,method="pearson")
+print(result)
+
+#EX 2
+
+data()
+View(trees)   
+a1<-cor.test(trees$Volume,trees$Girth,method="pearson")
+print(a1)
+#tetrachoric corealation
+library(psych) #install psych
+data=matrix(c(19,16,14,15)nrow = 2)
+tetrachoric(data)
+
+
+program 5
+
+View(VADeaths)
+d<-cor(VADeaths,use = "everything",method = "pearson")
+print(d)
+dc<-cor(mtcars$mpg,mtcars$wt)
+print(dc)
+View(corrplot)
+head(mtcars)
+m<-cor(mtcars)
+head(round(m,2))
+corrplot(m,method='circle')
+corrplot(m,method='pie')
+corrplot(m,method='color')
+corrplot(m,method='number')
+
+program 6
+
+n <- 2000
+sample_means = rep(NA, n)
+for(i in 1: n){
+  sample_means[i] = mean(rnorm(20, mean=10, sd=10))
+}
+head(sample_means)
+mean(sample_means)
+sd(sample_means)
+sum(sample_means >= 10)/length(sample_means)
+
+hist(sample_means, main="Sampling Distribution",
+     xlab="Sample Means", ylab="Frequency", col="#CE0027")
+
+
+program 7
+x=seq(-30,30,by=0.1)
+y=dnorm(x,mean(x),sd(x))
+plot(x,y)
+x=seq(from=-3,t=+3,by=0.1)
+y=dnorm(x,mean=2.5,sd=0.5)
+plot(x,y)
+#pnorm
+pnorm(-95,mean = 0,sd=1)
+#rnorm
+rnorm(10,mean=5,sd=2)
+
+programe 8
+
+#dbinom
+x=dbinom(x=3,20,1/4)
+print(x)
+plot(x)
+#pbinom
+x=pbinom(20,50,0.5)
+print(x)
+plot(x)
+#qbinom
+x=qbinom(0.25,30,1/2)
+print(x)
+plot(x)
+#rbinom
+x=rbinom(13,50,1/2)
+print(x)
+plot(x)
+
+program 9
+
+#one way 
+
+library(dplyr)  #install dplyr
+head(mtcars)
+mtcars_aov <- aov(mtcars$disp ~ factor(mtcars$qsec))
+summary(mtcars_aov)
+boxplot(disp ~ qsec, data = mtcars)
+
+library(stats)
+set.seed(60)
+teaching_methods <- rep(c("A", "B", "C"), each = 20)
+test_scores <- c(rnorm(20, mean = 80, sd = 5), 
+                 rnorm(20, mean = 85, sd = 5), 
+                 rnorm(20, mean = 90, sd = 5))
+data <- data.frame(Method = teaching_methods, Score = test_scores)
+print(data)
+anova_result <- aov(Score ~ Method, data = data)
+summary(anova_result)
+TukeyHSD(anova_result)
+boxplot(Score ~ Method, data = data)
+
+#two way test
+
+#ANNOVA TWO WAY        
+library(dplyr)
+mtcars
+mtcars_aov2 <- aov(mtcars$disp~factor(mtcars$gear) *
+                     factor(mtcars$am))
+summary(mtcars_aov2)
+hist(mtcars$disp[mtcars$am == 0],
+          xlab = "gear", ylab = "disp", main = "Automatic")
+
+hist(mtcars$gear[mtcars$am == 1],
+          xlab = "gear", ylab = "disp", main = "Manual")
+
+program 10
+
+
+library(MASS)       #install MASS
+print(str(survey))  #install survey
+stu_data <- data.frame(survey$Smoke, survey$Exer)
+stu_data <- table(survey$Smoke, survey$Exer)
+print(stu_data)
+chi_result <- chisq.test(stu_data)
+print(chi_result)
+
+# Visualize the data with a bar plot
+barplot(stu_data, beside = TRUE, col = c("blue", "yellow"),
+        main = "Smoking Habits vs Exercise Levels",
+        xlab = "Exercise Level", ylab = "Number of Students")
+
+# Add legend separately
+legend("center", legend = rownames(stu_data), fill = c("blue", "yellow"))
+
+ex 2
+
+library("MASS")  #install MASS
+print(str(Cars93))
+library("MASS")  #install MASS
+car.data <- data.frame(Cars93$AirBags, Cars93$Type)
+car.data = table(Cars93$AirBags, Cars93$Type) 
+print(car.data)
+print(chisq.test(car.data))
+
